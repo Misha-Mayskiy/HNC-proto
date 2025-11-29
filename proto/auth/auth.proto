@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/shvdev1/hacknechange-proto/gen/go/auth";
+
+service AuthService {
+  // Регистрация нового пользователя
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  
+  // Вход в систему
+  rpc Login (LoginRequest) returns (LoginResponse);
+  
+  // Проверка токена (вызывается Гейтвеем для защиты ручек)
+  rpc Validate (ValidateRequest) returns (ValidateResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  // role назначаем автоматически "user" на бэке, но можно передать "admin" если есть секретный ключ
+}
+
+message RegisterResponse {
+  string user_id = 1; // UUID созданного юзера
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1; // JWT Token
+}
+
+message ValidateRequest {
+  string token = 1;
+}
+
+message ValidateResponse {
+  string user_id = 1;
+  string role = 2; // "user" или "admin"
+  bool valid = 3;
+}

@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package user_profiles;
+
+option go_package = "customer_service/gen";
+
+import "google/protobuf/timestamp.proto";
+
+// Сообщение для профиля пользователя
+message UserProfile {
+  string user_id = 1;
+  string username = 2;
+  string company_name = 3;
+  string phone_number = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  string theme = 6;
+  string picked_model = 7;
+  string font = 8;
+}
+
+// Запрос на создание профиля
+message CreateUserProfileRequest {
+  string user_id = 1;
+  string username = 2;
+  string company_name = 3;
+  string phone_number = 4;
+  string theme = 5;
+  string picked_model = 6;
+  string font = 7;
+}
+
+// Ответ с созданным профилем
+message CreateUserProfileResponse {
+  UserProfile profile = 1;
+}
+
+// Запрос на получение профиля по ID
+message GetUserProfileRequest {
+  string user_id = 1;
+}
+
+// Ответ с профилем
+message GetUserProfileResponse {
+  UserProfile profile = 1;
+}
+
+// Запрос на обновление профиля
+message UpdateUserProfileRequest {
+  string user_id = 1;
+  string username = 2;
+  string company_name = 3;
+  string phone_number = 4;
+  string theme = 5;
+  string picked_model = 6;
+  string font = 7;
+}
+
+// Ответ с обновленным профилем
+message UpdateUserProfileResponse {
+  UserProfile profile = 1;
+}
+
+// Запрос на удаление профиля
+message DeleteUserProfileRequest {
+  string user_id = 1;
+}
+
+// Ответ на удаление
+message DeleteUserProfileResponse {
+  bool success = 1;
+}
+
+// Запрос на обновление настроек пользователя
+message UpdateUserSettingsRequest {
+  string user_id = 1;
+  string theme = 2;
+  string picked_model = 3;
+  string font = 4;
+}
+
+// Ответ с обновленными настройками
+message UpdateUserSettingsResponse {
+  string theme = 1;
+  string picked_model = 2;
+  string font = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+// Запрос на получение настроек пользователя
+message GetUserSettingsRequest {
+  string user_id = 1;
+}
+
+// Ответ с настройками пользователя
+message GetUserSettingsResponse {
+  string theme = 1;
+  string picked_model = 2;
+  string font = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+message AnalyzeReviewRequest {
+  string user_id = 1;
+  string text = 2;
+  string source = 3;
+}
+
+message AnalyzeReviewResponse {
+  string review_id = 1;
+  string status = 2;
+}
+
+// Сервис для работы с профилями пользователей
+service UserProfileService {
+  rpc CreateUserProfile(CreateUserProfileRequest) returns (CreateUserProfileResponse);
+  rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
+  rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse);
+  rpc DeleteUserProfile(DeleteUserProfileRequest) returns (DeleteUserProfileResponse);
+  rpc UpdateUserSettings(UpdateUserSettingsRequest) returns (UpdateUserSettingsResponse);
+  rpc GetUserSettings(GetUserSettingsRequest) returns (GetUserSettingsResponse);
+  rpc AnalyzeReview(AnalyzeReviewRequest) returns (AnalyzeReviewResponse);
+}
