@@ -1,6 +1,6 @@
 module github.com/Misha-Mayskiy/HNC-proto
 
-go 1.24
+go 1.24.0
 
 require (
 	google.golang.org/grpc v1.77.0
